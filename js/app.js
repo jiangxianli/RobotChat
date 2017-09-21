@@ -26,7 +26,13 @@ $(function () {
             $('.chat-container').css({'height': height + 'px'});
         },
         getUserId: function () {
-
+            var uuid = localStorage.getItem("uuid");
+            if (uuid) {
+                return uuid;
+            }
+            uuid = Math.uuid();
+            localStorage.setItem("uuid", uuid);
+            return uuid;
         },
         getFaceUrl: function (chatter) {
             return "http://user.service.gushi.com/face/99e2c6bec85380d86a0e0d40c69fe6cf.jpg";
