@@ -36,7 +36,7 @@ $(function () {
         rendChatTemplate: function (content, chatter) {
             var robot = chatter == "robot" ? 1 : 0;
             var face = this.getFaceUrl(chatter);
-            var html = '<div class="chat-section '+(robot == 1 ? '' : ' chat-right')+'">\
+            var html = '<div class="chat-section ' + (robot == 1 ? '' : ' chat-right') + '">\
                     <img src="' + face + '"/>\
                     <div class="chat-content">' + content + '</div>\
                </div>';
@@ -56,8 +56,9 @@ $(function () {
         },
         text2AudioSound: function (text) {
             var url = text2AudioApi.url + encodeURI(text);
-            $('.chat-audio source').attr('src', url);
-            $('.chat-audio embed').attr('src', url);
+            var audio = new Audio(url);
+            audio.currentTime = 0;
+            audio.play();
         },
         sendChatContentClickFun: function () {
             var _this = this;
@@ -66,7 +67,7 @@ $(function () {
                 if (content == "") {
                     return;
                 }
-                _this.rendChatTemplate(content,'chat_user')
+                _this.rendChatTemplate(content, 'chat_user')
                 _this.tuLingChat(content, 'chat_user');
                 $('input#chat-input').val("")
             })
