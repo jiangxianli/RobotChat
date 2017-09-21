@@ -41,7 +41,9 @@ $(function () {
                     <div class="chat-content">' + content + '</div>\
                </div>';
             chatContainer.append(html);
-            this.text2AudioSound(content);
+            if (robot == 1) {
+                this.text2AudioSound(content);
+            }
         },
         tuLingChat: function (content, type) {
             var _this = this;
