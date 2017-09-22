@@ -46,7 +46,7 @@ $(function () {
                     <img src="' + face + '"/>\
                     <div class="chat-content">' + content + '</div>\
                </div>';
-            chatContainer.append(html);
+            chatContainer.append(html).scrollTop(chatContainer.get(0).scrollHeight);
             if (robot == 1) {
                 this.text2AudioSound(content);
             }
@@ -67,6 +67,14 @@ $(function () {
             var audio = new Audio(url);
             audio.currentTime = 0;
             audio.play();
+            var play = function () {
+                audio.play();
+                document.removeEventListener("touchstart", play, false);
+            };
+            document.addEventListener("WeixinJSBridgeReady", function () {
+                play();
+            }, false);
+            document.addEventListener("touchstart", play, false);
         },
         sendChatContentClickFun: function () {
             var _this = this;

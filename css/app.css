@@ -18,7 +18,9 @@
 }
 
 .chat-container {
-    padding: 1rem;
+    padding: 1rem 1rem 40px 1rem;
+    overflow-y: auto;
+    position: relative;
 }
 
 .chat-container img {
@@ -29,13 +31,14 @@
     margin-right: 0.7rem;
     position: relative;
 }
-.chat-container .chat-section{
+
+.chat-container .chat-section {
     overflow: hidden;
     margin-bottom: 0.6rem;
 }
+
 .chat-container .chat-section .chat-content {
     display: inline-block;
-    position: relative;
     padding: 0 10px;
     max-width: calc(100% - 40px);
     min-height: 30px;
@@ -45,7 +48,7 @@
     word-break: break-all;
     background-color: #fafafa;
     border-radius: 4px;
-    margin-top:0.5rem;
+    margin-top: 0.5rem;
 }
 
 .chat-container .chat-section .chat-content:before {
