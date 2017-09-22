@@ -182,8 +182,7 @@ $(function () {
             return uuid;
         },
         getFaceUrl: function (chatter) {
-            return "http://user.service.gushi.com/face/99e2c6bec85380d86a0e0d40c69fe6cf.jpg";
-            var face = chatter == "robot" ? "" : "";
+            var face = (chatter == "robot" ? "./img/hacker.png" : "./img/customer.png");
             return face;
         },
         rendChatTemplate: function (content, chatter, text2audio, savedb) {
