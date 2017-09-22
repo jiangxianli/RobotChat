@@ -23,7 +23,7 @@ $(function () {
             }
         },
         linkChat: function (response) {
-            var content = '<a href="' + response.url + '">' + response.url + '</a>';
+            var content = '<a href="' + response.url + '">点击链接查看哦~ </a>';
             app.rendChatTemplate(content, 'robot', false);
         },
         newsChat: function (response) {
@@ -119,7 +119,13 @@ $(function () {
                 _this.rendChatTemplate(content, 'chat_user', true)
                 _this.tuLingChat(content, 'chat_user');
                 $('input#chat-input').val("")
-            })
+            });
+            $('input#chat-input').keydown(function (e) {
+                var e = e || event, keycode = e.which || e.keyCode;
+                if (keycode == 13) {
+                    $('.send-chat-btn').trigger("click");
+                }
+            });
         }
 
 
