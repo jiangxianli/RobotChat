@@ -12,7 +12,32 @@ $(function () {
     //对话容器
     var chatContainer = $('.chat-container');
 
-    var app = {
+    var app = {};
+
+    var tuLingChat = {
+        showChat: function (response) {
+            if (response.code == 200000) {
+                this.linkChat(response);
+            } else if (response.code == 302000) {
+                this.newsChat(response);
+            }
+        },
+        linkChat: function (response) {
+            var content = '<a href="' + response.url + '">' + response.url + '</a>';
+            app.rendChatTemplate(content, 'robot', false);
+        },
+        newsChat: function (response) {
+            var content = '<ul>';
+            $.each(response.list, function (i, item) {
+                content += '<li><a href="' + item.detailurl + '">【' + item.source + '】' + item.article + '</a> </li>'
+            });
+            content += '</ul>';
+            app.rendChatTemplate(content, 'robot', false);
+        }
+
+    };
+
+    app = {
         init: function () {
             //聊天窗口自适应高度
             this.windowAutoHeight();
@@ -39,7 +64,7 @@ $(function () {
             var face = chatter == "robot" ? "" : "";
             return face;
         },
-        rendChatTemplate: function (content, chatter) {
+        rendChatTemplate: function (content, chatter, text2audio) {
             var robot = chatter == "robot" ? 1 : 0;
             var face = this.getFaceUrl(chatter);
             var html = '<div class="chat-section ' + (robot == 1 ? '' : ' chat-right') + '">\
@@ -47,7 +72,7 @@ $(function () {
                     <div class="chat-content">' + content + '</div>\
                </div>';
             chatContainer.append(html).scrollTop(chatContainer.get(0).scrollHeight);
-            if (robot == 1) {
+            if (robot == 1 && text2audio == true) {
                 this.text2AudioSound(content);
             }
         },
@@ -58,7 +83,8 @@ $(function () {
                 method: "POST",
                 data: {key: tuLingApi.key, info: content, user_id: this.getUserId()},
                 success: function (response) {
-                    _this.rendChatTemplate(response.text, 'robot');
+                    _this.rendChatTemplate(response.text, 'robot', true);
+                    tuLingChat.showChat(response);
                 }
             })
         },
@@ -83,7 +109,7 @@ $(function () {
                 if (content == "") {
                     return;
                 }
-                _this.rendChatTemplate(content, 'chat_user')
+                _this.rendChatTemplate(content, 'chat_user', true)
                 _this.tuLingChat(content, 'chat_user');
                 $('input#chat-input').val("")
             })
