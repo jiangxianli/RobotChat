@@ -171,9 +171,6 @@ $(function () {
             $(window).resize(function () {
                 autoHeight();
             });
-            document.body.addEventListener('touchmove' , function(e){
-                e.preventDefault();
-            });
         },
         getUserId: function () {
             var uuid = localStorage.getItem("uuid");
