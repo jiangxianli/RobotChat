@@ -46,9 +46,16 @@ $(function () {
         },
         //聊天窗口自适应高度
         windowAutoHeight: function () {
-            var windowHeight = $(window).height();
-            var height = windowHeight - $('.head-title').height();
-            $('.chat-container').css({'height': height + 'px'});
+            var autoHeight = function () {
+                var windowHeight = $(window).height();
+                var height = windowHeight - $('.head-title').height() - $('.chat-input').height();
+                $('.chat-container').css({'height': height + 'px'});
+            };
+            autoHeight();
+            //当浏览器大小变化时
+            $(window).resize(function () {
+                autoHeight();
+            });
         },
         getUserId: function () {
             var uuid = localStorage.getItem("uuid");
