@@ -16,6 +16,23 @@ $(function () {
     var app = {};
     var util = {};
     var localDatabase = {};
+    var dateFormat = {
+        format: function (format) {
+            var date = new Date();
+            var format_arr = {
+                "Y": date.getFullYear(),
+                "m": date.getMonth() + 1,
+                "d": date.getDate(),
+                "H": date.getHours(),
+                "i": date.getMinutes(),
+                "s": date.getSeconds(),
+            };
+            $.each(format_arr, function (i, item) {
+                format = format.replace(i, item)
+            });
+            return format;
+        },
+    }
 
     localDatabase = {
         db: {},
@@ -140,13 +157,13 @@ $(function () {
         dailySentence: function () {
             var _this = this;
            setTimeout(function(){
-               var key = 'daily_sentence_' + (new Date().toDateString);
+               var key = 'daily_sentence_' + dateFormat.format('Ymd');
                if (localStorage.getItem(key)) {
                    return;
                }
                var sentence = [
                    "我们来聊聊吧!说出你的故事",
-                   "好的开始,好的结束",
+                   "好的开始,好的结束!",
                    "我们要做永远的好朋友!",
                    "谈个心交个朋友吧!",
                    "来日方长,后会有期!",
@@ -197,7 +214,7 @@ $(function () {
                 this.text2AudioSound(content);
             }
             if (savedb == true) {
-                this.saveChatMsg(['chatter', 'content', 'time', 'face'], [chatter, content, new Date().toLocaleTimeString(), face])
+                this.saveChatMsg(['chatter', 'content', 'time', 'face'], [chatter, content, dateFormat.format('YmdHis'), face])
             }
         },
         tuLingChat: function (content, type) {
